@@ -1,0 +1,78 @@
+# PlantUML Diagram for AddressBook, Record, Phone, EmailAddress, Birthday, and Bot classes
+@startuml
+
+abstract class Field {
+  - value: Any
+  + __init__(value: Any = None): void
+  + __getitem__(): Any
+}
+
+class Name {
+  + __init__(value: Any)
+  + __getitem__(index: Any): Any
+  + get_value(): Any
+}
+
+class Phone {
+  + __init__(value: Any = None): void
+  + get_value(): str
+  + set_value(value: Any): void
+  + validate_phone(phone: Any): Any
+}
+
+class EmailAddress {
+  + __init__(value: Any = None): void
+  + set_value(value: Any): void
+  + get_value(): Any
+  + validate_email(email: Any): Any
+}
+
+class Birthday {
+  + __init__(value: Any = None): void
+  + set_value(value: Any): void
+  + days_to_birthday(): int
+  + get_value(): Any
+}
+
+class Record {
+  + __init__(name: Name, birthday: Birthday = None, email: EmailAddress = None): void
+  + add_email(email: EmailAddress): void
+  + get_emails(): List[EmailAddress]
+  + add_phone(phone: Phone): void
+  + remove_phone(phone: Phone): void
+  + remove_email(email: EmailAddress): void
+  + edit_phone(phone: Phone, new_phone: Any): void
+  + find_phone(phone: Phone): Phone
+  + get_email(): Any
+  + edit_email(email: EmailAddress, new_email: Any): void
+}
+
+class Bot {
+  + __init__(filename: str = "address_book.dat"): void
+  + handle_command(address_book: AddressBook, command: str): str
+}
+
+class AddressBook {
+  + __init__(filename: str): void
+  + add_record(record: Record): void
+  + delete_contact(name: str): void
+  + find(name: str): Record
+  + search(query: str): List[Record]
+  + iterator(page_number: int): List[Record]
+  + get_total_pages(): int
+  + save_to_file(): void
+}
+
+Field <|-- Name
+Field <|-- Phone
+Field <|-- EmailAddress
+Field <|-- Birthday
+Field <|-- Record
+Record o--> Name
+Record o--> Phone
+Record o--> EmailAddress
+Record o--> Birthday
+Bot --> AddressBook
+AddressBook o--> Record
+
+@enduml
