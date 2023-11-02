@@ -244,7 +244,7 @@ class Bot:
             total_pages = address_book.get_total_pages()
 
             if page_number < 1 or page_number > total_pages:
-                return f"Invalid page number. Please provide a number between 1 and {total_pages}."
+                return f"There are no contacts."
 
             page_records = address_book.iterator(page_number)
 
