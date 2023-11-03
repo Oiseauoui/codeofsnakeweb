@@ -1,6 +1,7 @@
 import datetime
 import pickle
 
+
 class Note:
     def __init__(self, title, text, tags=None):
         self.title = title
@@ -9,9 +10,10 @@ class Note:
         self.created_at = datetime.datetime.now()
 
     def __repr__(self):
-        date_str = self.created_at.strftime('%Y-%m-%d %H:%M:%S')
+        date_str = self.created_at.strftime("%Y-%m-%d %H:%M:%S")
         tags_str = f"[Tags: {', '.join(self.tags)}]" if self.tags else ""
-        return f'[{date_str}] {self.title} - {self.text} {tags_str}'
+        return f"[{date_str}] {self.title} - {self.text} {tags_str}"
+
 
 class Notebook:
     def __init__(self):
@@ -48,12 +50,12 @@ class Notebook:
             return False
 
     def save_to_file(self, filename="notes.pkl"):
-        with open(filename, 'wb') as file:
+        with open(filename, "wb") as file:
             pickle.dump(self.notes, file)
 
     def load_from_file(self, filename="notes.pkl"):
         try:
-            with open(filename, 'rb') as file:
+            with open(filename, "rb") as file:
                 self.notes = pickle.load(file)
         except FileNotFoundError:
             pass
@@ -80,6 +82,7 @@ class Notebook:
             all_tags.update(note.tags)
         return list(all_tags)
 
+
 def input_with_retry(prompt, validation_func=None, error_message="Invalid input!"):
     while True:
         data = input(prompt)
@@ -87,29 +90,37 @@ def input_with_retry(prompt, validation_func=None, error_message="Invalid input!
             return data
         print(error_message)
 
+
 def notebook_interface():
     notebook = Notebook()
     notebook.load_from_file()
     while True:
-        command = input_with_retry(
-            "\nChoose an option in notes ('add', 'search', 'delete', 'edit', 'list', 'clear', 'tags', 'exit'): ",
-            lambda x: x in ['add', 'delete', 'edit', 'list', 'clear', 'exit', 'search', 'tags']
-        ).strip().lower()
+        command = (
+            input_with_retry(
+                "\nChoose an option in notes ('add', 'search', 'delete', 'edit', 'list', 'clear', 'tags', 'exit'): ",
+                lambda x: x
+                in ["add", "delete", "edit", "list", "clear", "exit", "search", "tags"],
+            )
+            .strip()
+            .lower()
+        )
 
-        if command == 'add':
+        if command == "add":
             title = input_with_retry("Enter note title: ", lambda x: x != "")
             text = input_with_retry("Enter note text: ", lambda x: x != "")
-            tags = input("Enter tags (comma separated, leave blank for none): ").split(',')
+            tags = input("Enter tags (comma separated, leave blank for none): ").split(
+                ","
+            )
             tags = [tag.strip() for tag in tags if tag.strip()]
             notebook.add(title, text, tags)
             notebook.save_to_file()
 
-        elif command == 'edit':
+        elif command == "edit":
             notebook.list_notes()
             index = input_with_retry(
                 "Enter the index of the note you want to edit: ",
                 lambda x: x.isdigit() and 0 <= int(x) < len(notebook.notes),
-                "Please enter a valid index!"
+                "Please enter a valid index!",
             )
             index = int(index)
 
@@ -121,7 +132,9 @@ def notebook_interface():
             if not new_text:
                 new_text = None
 
-            new_tags = input("Enter new tags (comma separated, leave blank for none): ").split(',')
+            new_tags = input(
+                "Enter new tags (comma separated, leave blank for none): "
+            ).split(",")
             new_tags = [tag.strip() for tag in new_tags if tag.strip()]
 
             if notebook.edit(index, new_title, new_text, new_tags):
@@ -130,19 +143,21 @@ def notebook_interface():
                 print("Invalid index!")
             notebook.save_to_file()
 
-        elif command == 'delete':
+        elif command == "delete":
             notebook.list_notes()
             index = input_with_retry(
                 "Enter note index to delete: ",
                 lambda x: x.isdigit() and 0 <= int(x) < len(notebook.notes),
-                "Please enter a valid index!"
+                "Please enter a valid index!",
             )
             index = int(index)
             notebook.delete(index)
             notebook.save_to_file()
 
-        elif command == 'search':
-            keyword = input_with_retry("Enter a keyword to search for: ", lambda x: x != "")
+        elif command == "search":
+            keyword = input_with_retry(
+                "Enter a keyword to search for: ", lambda x: x != ""
+            )
             matching_notes = notebook.search(keyword)
             if matching_notes:
                 print("Matching notes:")
@@ -151,23 +166,24 @@ def notebook_interface():
             else:
                 print("No matching notes found.")
 
-        elif command == 'list':
+        elif command == "list":
             notebook.list_notes()
 
-        elif command == 'clear':
+        elif command == "clear":
             notebook.clear_all()
             print("All notes have been cleared.")
             notebook.save_to_file()
 
-        elif command == 'tags':
+        elif command == "tags":
             tags = notebook.list_tags()
             if tags:
-                print("Tags: ", ', '.join(tags))
+                print("Tags: ", ", ".join(tags))
             else:
                 print("No tags found.")
 
-        elif command == 'exit':
+        elif command == "exit":
             break
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     notebook_interface()

@@ -2,8 +2,8 @@ from datetime import datetime
 import re
 from abc import ABC, abstractmethod
 
-class Field(ABC):
 
+class Field(ABC):
     @abstractmethod
     def __getitem__(self):
         pass
@@ -22,10 +22,11 @@ class Name(Field):
     def get_value(self):
         return self.value
 
+
 # Concrete subclass of Name
 class ConcreteName(Name):
     pass
-    
+
 
 # 15.10.23 Olga
 class Phone(Field):
@@ -45,7 +46,8 @@ class Phone(Field):
     @staticmethod
     def validate_phone(phone):
         new_phone = (
-            str(phone).strip()
+            str(phone)
+            .strip()
             .removeprefix("+")
             .replace("(", "")
             .replace(")", "")
@@ -55,7 +57,7 @@ class Phone(Field):
         if new_phone.startswith("38") and len(new_phone) == 12:
             return "+" + new_phone
         elif len(new_phone) == 10:
-            return '+38' + new_phone
+            return "+38" + new_phone
         else:
             return None
 
@@ -63,14 +65,13 @@ class Phone(Field):
         return self.value
 
 
-
-# 15.10.23 Yulia 
+# 15.10.23 Yulia
 
 
 class EmailAddress(Field):
     def __init__(self, value=None):  # =None убрала 16.10 Olha
         super().__init__(value)
-        self.value = value  
+        self.value = value
 
     def __getitem__(self):
         pass
@@ -78,7 +79,7 @@ class EmailAddress(Field):
     def set_value(self, value):
         validated_email = self.validate_email(value)
         if isinstance(value, str) and self.validate_email(value):
-            self.value = validated_email #value
+            self.value = validated_email  # value
         else:
             print("Invalid email format")
 
@@ -86,14 +87,13 @@ class EmailAddress(Field):
         return self.value
 
     @staticmethod
-    def validate_email(email):   #16.10.23
-        pattern = r'[A-Za-z][A-Za-z0-9._]+@[A-Za-z]+\.[A-Za-z]{2,}\b'
+    def validate_email(email):  # 16.10.23
+        pattern = r"[A-Za-z][A-Za-z0-9._]+@[A-Za-z]+\.[A-Za-z]{2,}\b"
         temp_email = re.findall(pattern, email)
         if temp_email:
             return "".join(temp_email)  # True
         else:
             return False
-
 
 
 class Birthday(Field):
@@ -132,29 +132,30 @@ class Birthday(Field):
         if (current_date.month, current_date.day) > (birth_date.month, birth_date.day):
             next_birthday_year += 1
 
-        next_birthday_date = datetime(next_birthday_year, birth_date.month, birth_date.day).date()
+        next_birthday_date = datetime(
+            next_birthday_year, birth_date.month, birth_date.day
+        ).date()
 
         difference = next_birthday_date - current_date
         days_until_birthday = difference.days
 
         return days_until_birthday
-    
+
     def __getitem__(self):
-            return self.value
-    
+        return self.value
+
     def get_value(self):
         return self.value
 
+
 class Record:
-    
-    
     def __init__(self, name, birthday=None, email=None):
         self.name = Name(name)
         self.phones = []
         self.emails = [] if email else [EmailAddress(email)]
         self.birthday = Birthday(birthday) if birthday else None
 
-    def add_email(self, email): #16.10.23 Olha
+    def add_email(self, email):  # 16.10.23 Olha
         if isinstance(email, EmailAddress):
             self.emails.append(email)
         elif EmailAddress.validate_email(email):
@@ -164,21 +165,33 @@ class Record:
             else:
                 print("Invalid email number format")
         else:
-            self.emails.append(EmailAddress(None))  # new - пофиксила баг с корректной перезаписью Email
+            self.emails.append(
+                EmailAddress(None)
+            )  # new - пофиксила баг с корректной перезаписью Email
             print("Invalid email number format")
 
-    
     def get_emails(self):
-        if hasattr(self, 'emails'):
-            return [email for email in self.emails if email and isinstance(email, EmailAddress)] if self.emails else []
-        elif hasattr(self, 'email'):
-            return [self.email] if self.email and isinstance(self.email, EmailAddress) else []
+        if hasattr(self, "emails"):
+            return (
+                [
+                    email
+                    for email in self.emails
+                    if email and isinstance(email, EmailAddress)
+                ]
+                if self.emails
+                else []
+            )
+        elif hasattr(self, "email"):
+            return (
+                [self.email]
+                if self.email and isinstance(self.email, EmailAddress)
+                else []
+            )
         else:
             return []
 
-    
     def add_phone(self, phone):
-        if isinstance(phone, Phone):  
+        if isinstance(phone, Phone):
             self.phones.append(phone)
         elif Phone.validate_phone(phone):
             phone_value = Phone.validate_phone(phone)
@@ -192,7 +205,7 @@ class Record:
     def remove_phone(self, phone):
         self.phones = [p for p in self.phones if p.value != phone]
 
-    #16.10.23  Olha
+    # 16.10.23  Olha
     def remove_email(self, email):
         self.emails = [p for p in self.emails if p.value != email]
 
@@ -209,12 +222,11 @@ class Record:
             if p.value == phone:
                 return p
 
-    
-# 15.10.23 Yulia
+    # 15.10.23 Yulia
     def get_email(self):
         return self.email.get_value() if self.email else None
 
-    #16.10.23 Olha
+    # 16.10.23 Olha
     def edit_email(self, email, new_email):
         for p in self.emails:
             if p.value == email:

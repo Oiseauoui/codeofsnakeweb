@@ -6,19 +6,22 @@ from info import Record
 from info import Phone
 from info import Birthday
 
+
 class Bot:
-    def __init__(self, filename="address_book.dat"):  # Provide a default filename or pass it when creating an instance
+    def __init__(
+        self, filename="address_book.dat"
+    ):  # Provide a default filename or pass it when creating an instance
         self.book = AddressBook(filename)
 
     def handle_command(self, address_book, command):
-    # Розділити введену команду на частини
+        # Розділити введену команду на частини
         parts = command.lower().split()
 
         # Перевірити, чи існують частини команди
         if not parts:
             print("Enter a command. Type 'helper' for a list of available commands.")
             return ""
-        
+
         action, *args = parts
 
         # 15.10.23 Nazar
@@ -32,9 +35,11 @@ class Bot:
 
             # Separate phones, email, and birthday
             for arg in args[1:]:
-                if "@" in arg or any(char.isalpha() for char in arg): # Check if arg is an email
+                if "@" in arg or any(
+                    char.isalpha() for char in arg
+                ):  # Check if arg is an email
                     email = arg
-                elif len(arg.split('.')) == 3:
+                elif len(arg.split(".")) == 3:
                     try:
                         datetime.strptime(arg, "%d.%m.%Y")
                         birthday = arg
@@ -64,22 +69,26 @@ class Bot:
                     record.birthday = Birthday(birthday)
                 except ValueError:
                     return "Invalid date format. Please use 'dd.mm.yyyy'."
-            
+
             # Add the record only if all data is valid
             address_book.add_record(record)
 
             # Save data immediately after adding
             address_book.save_to_file()
 
-            phones_str = ', '.join([str(p.get_value()) for p in record.phones])
-            email_str = ', '.join([str(email.get_value()) for email in record.get_emails()])
+            phones_str = ", ".join([str(p.get_value()) for p in record.phones])
+            email_str = ", ".join(
+                [str(email.get_value()) for email in record.get_emails()]
+            )
             birthday_str = record.birthday.get_value() if record.birthday else "None"
 
-            response = f"Contact {name} added with the following information:\n" \
-                    f"Name: {record.name.get_value()}\n" \
-                    f"Phone: {phones_str}\n" \
-                    f"Email: {email_str if email else 'None'}\n" \
-                    f"Birthday: {birthday_str if birthday else 'None'}"
+            response = (
+                f"Contact {name} added with the following information:\n"
+                f"Name: {record.name.get_value()}\n"
+                f"Phone: {phones_str}\n"
+                f"Email: {email_str if email else 'None'}\n"
+                f"Birthday: {birthday_str if birthday else 'None'}"
+            )
 
             # If birthday is present, calculate and append days until the next birthday
             if birthday:
@@ -92,17 +101,15 @@ class Bot:
 
             return response
 
-
-    # 15.10.23 Yulia
+        # 15.10.23 Yulia
         elif action == "delete":
             if len(args) < 1:
                 return "Invalid format for 'delete' command. Please provide a name."
             name = args[0]
             address_book.delete_contact(name)
             return ""
-        
 
-    # 14.10.23 Alex
+        # 14.10.23 Alex
         elif action == "notebook":
             notebook_interface()
             return "Work with notebook is completed."
@@ -120,9 +127,7 @@ class Bot:
                 response += f"\n{days_left} days left until the next birthday."
             return response
 
-
-
-    # 15.10.23 Nazar , 16.10.23 modify Yuliya
+        # 15.10.23 Nazar , 16.10.23 modify Yuliya
 
         elif action == "change":
             if len(args) < 2:
@@ -132,9 +137,7 @@ class Bot:
             record = address_book.find(name)
             if record:
                 change_type = args[1].lower()
-                
 
-        
                 if change_type == "phone" and len(args) >= 3:
                     new_phone = args[2]
                     try:
@@ -144,7 +147,7 @@ class Bot:
                         return "" if Phone.validate_phone(new_phone) else ""
                     except ValueError:
                         return "Invalid phone number format"
-                    
+
                 elif change_type == "email" and len(args) >= 3:
                     new_email = args[2]
                     try:
@@ -154,9 +157,8 @@ class Bot:
                         return ""  # Empty string to suppress success message
                     except ValueError:
                         return "Invalid email format"
-                
 
-    #modify Yuliya 18.10.23
+                # modify Yuliya 18.10.23
                 elif change_type == "birthday" and len(args) >= 3:
                     new_birthday = args[2]
                     try:
@@ -171,46 +173,53 @@ class Bot:
                         print("Invalid date format. Please use 'dd.mm.yyyy'")
                         return f"Contact {name} birthday didn't change. Invalid date format. Please use 'dd.mm.yyyy'"
 
-
-    # 15.10.23 Nazar
+        # 15.10.23 Nazar
         elif action == "find":
             if len(args) < 1:
-                return "Invalid format for 'find' command. Please provide a search query."
-            search_query = ' '.join(args)
+                return (
+                    "Invalid format for 'find' command. Please provide a search query."
+                )
+            search_query = " ".join(args)
             results = address_book.search(search_query)
 
             if results:
                 contacts_info = []
                 for record in results:
-                    phones_str = ', '.join([p.get_value() for p in record.phones])
+                    phones_str = ", ".join([p.get_value() for p in record.phones])
                     info = f"{record.name.get_value()}: {phones_str} | {record.birthday.get_value()}"
 
                     # Check if birthday is present
                     if record.birthday.get_value():
                         days_left = record.birthday.days_to_birthday()
-                        birthday_info = f" | Birthday in {days_left} days" if days_left is not None else ""
+                        birthday_info = (
+                            f" | Birthday in {days_left} days"
+                            if days_left is not None
+                            else ""
+                        )
                         info += birthday_info
                     contacts_info.append(info)
                 return "\n".join(contacts_info)
 
             else:
-
                 return f"No contacts found for '{search_query}'"
 
-
-    # 15.10.23 Nazar
+        # 15.10.23 Nazar
         elif action == "phone":
             if len(args) < 1:
                 return "Invalid format for 'phone' command. Please provide a name."
             name = args[0]
             record = address_book.find(name)
             if record:
-                phones_str = ', '.join([p.get_value() for p in record.phones])
+                phones_str = ", ".join([p.get_value() for p in record.phones])
                 birthday_info = ""
                 # Check if birthday is present
                 if record.birthday.get_value():
                     days_left = record.birthday.days_to_birthday()
-                    birthday_info = f" | Birthday in {days_left} days" if days_left is not None else ""
+                    birthday_info = (
+                        f" | Birthday in {days_left} days"
+                        if days_left is not None
+                        else ""
+                    )
                 return f"Phone number for {name}: {phones_str} | {record.birthday.get_value()} {birthday_info}"
 
             else:
@@ -229,16 +238,14 @@ class Bot:
                     if i is not None:
                         emails_list.append(str(i.get_value()))
                 if emails_list:
-                    emails_str = ', '.join(emails_list)
+                    emails_str = ", ".join(emails_list)
                 else:
                     emails_str = "No emails"
                 return f"Email for {name}: {emails_str}"
             else:
                 return f"Contact {name} not found"
-            
 
-
-    # 14.10.23 Nazar / Yuliya pagination 18.10.23
+        # 14.10.23 Nazar / Yuliya pagination 18.10.23
         elif action == "show" and args and args[0] == "all":
             page_number = int(args[1]) if len(args) > 1 and args[1].isdigit() else 1
             total_pages = address_book.get_total_pages()
@@ -253,10 +260,14 @@ class Bot:
 
             contacts_info = []
             for record in page_records:
-                phones_str = ', '.join([str(p.get_value()) for p in record.phones])
-                email_str = ', '.join([str(email.get_value()) for email in record.get_emails()])
+                phones_str = ", ".join([str(p.get_value()) for p in record.phones])
+                email_str = ", ".join(
+                    [str(email.get_value()) for email in record.get_emails()]
+                )
                 # Check if record.birthday is not None before accessing get_value()
-                birthday_str = record.birthday.get_value() if record.birthday else "None"
+                birthday_str = (
+                    record.birthday.get_value() if record.birthday else "None"
+                )
 
                 info = f"{record.name.get_value()} | Phone: {phones_str or '-'} | Email: {email_str or '-'} | Birthday: {birthday_str or '-'}"
 
@@ -270,7 +281,7 @@ class Bot:
 
                 contacts_info.append(info)
 
-            #Yuliya 18.10.23
+            # Yuliya 18.10.23
             # Додамо опцію "наступна сторінка" та "попередня сторінка"
             prev_page = page_number - 1 if page_number > 1 else None
             next_page = page_number + 1 if page_number < total_pages else None
@@ -283,8 +294,6 @@ class Bot:
 
             return "\n".join(contacts_info)
 
-
-
         elif action == "celebration" and args and args[0] == "in":
             if len(args) < 2 or not args[1].isdigit():
                 return "Invalid format for 'celebration in' command. Please provide a valid number of days."
@@ -295,18 +304,22 @@ class Bot:
                 if record.birthday.get_value():
                     days_left = record.birthday.days_to_birthday()
                     if days_left is not None and days_left <= days_until_celebration:
-                        phones_str = ', '.join([p.get_value() for p in record.phones])
-                        upcoming_birthdays.append(f"{record.name.get_value()}: {phones_str} | {record.birthday.get_value()}. Don't forget to greet!")
+                        phones_str = ", ".join([p.get_value() for p in record.phones])
+                        upcoming_birthdays.append(
+                            f"{record.name.get_value()}: {phones_str} | {record.birthday.get_value()}. Don't forget to greet!"
+                        )
 
             if upcoming_birthdays:
-                return f"Upcoming birthdays in the next {days_until_celebration} days:\n" + "\n".join(upcoming_birthdays)
+                return (
+                    f"Upcoming birthdays in the next {days_until_celebration} days:\n"
+                    + "\n".join(upcoming_birthdays)
+                )
             else:
-                return f"No upcoming birthdays in the next {days_until_celebration} days."
-                
-            
+                return (
+                    f"No upcoming birthdays in the next {days_until_celebration} days."
+                )
 
-
-    #14.10.23 Nazar
+        # 14.10.23 Nazar
         elif action == "helper":
             return (
                 "Available commands:\n"
@@ -317,18 +330,16 @@ class Bot:
                 "  - find [letter] or [number]: Display all contacts with letter or number, which you saied about.\n"
                 "  - change [name] [phone] or [birthday]: Changes contact, which you want.\n"
                 "  - phone [name]: phoning person you want.\n"
-                "  - delete [name]: Delete a contact by name.\n"  #15.10.23 Yuliya
+                "  - delete [name]: Delete a contact by name.\n"  # 15.10.23 Yuliya
                 "  - goodbye, close, exit: Save the address book to a file and exit the program.\n"
-                "  - clean: Open sorter.\n"  #15.10.23 Alex
-                "  - notebook: Open notes.\n" #15.10.23 Alex 
+                "  - clean: Open sorter.\n"  # 15.10.23 Alex
+                "  - notebook: Open notes.\n"  # 15.10.23 Alex
                 "  - email [name]: Shows all emails for a contact "  # 16.10.23 Olha
-
             )
 
         elif action == "unknown":
             print("Unknown command. Type 'helper' for a list of available commands.")
             return "Unknown command"
-
 
         elif action == "hello":
             return "How can I help you?"
