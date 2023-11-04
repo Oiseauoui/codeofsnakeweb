@@ -1,7 +1,5 @@
-from datetime import datetime as dt, timedelta
 from collections import UserDict
 import pickle
-from info import *
 
 
 class AddressBook(UserDict):
@@ -34,7 +32,7 @@ class AddressBook(UserDict):
     def iterator(self):
         records = list(self.data.values())
         for i in range(0, len(records), self.page_size):
-            yield records[i : i + self.page_size]
+            yield records[i: i + self.page_size]
 
     def save_to_file(self):
         try:
@@ -43,17 +41,6 @@ class AddressBook(UserDict):
             print(f"Address book saved to {self.filename}")
         except Exception as e:
             print(f"Error saving to {self.filename}: {str(e)}")
-
-    def search(self, query):
-        query = query.lower()
-        results = []
-        for record in self.data.values():
-            if query in record.name.get_value().lower():
-                results.append(record)
-            for phone in record.phones:
-                if query in phone.get_value():
-                    results.append(record)
-        return results
 
     # 15.10.23 Yulia
     def delete_contact(self, name):

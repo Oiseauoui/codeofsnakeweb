@@ -113,8 +113,6 @@ class Birthday(Field):
 
         self.value = value
 
-        self.value = value
-
     def days_to_birthday(self):
         if not self.value:
             return None
@@ -150,6 +148,7 @@ class Birthday(Field):
 
 class Record:
     def __init__(self, name, birthday=None, email=None):
+        self.email = None
         self.name = Name(name)
         self.phones = []
         self.emails = [] if email else [EmailAddress(email)]
@@ -190,17 +189,6 @@ class Record:
         else:
             return []
 
-    def add_phone(self, phone):
-        if isinstance(phone, Phone):
-            self.phones.append(phone)
-        elif Phone.validate_phone(phone):
-            phone_value = Phone.validate_phone(phone)
-            if phone_value:
-                self.phones.append(Phone(phone_value))
-            else:
-                raise ValueError("Invalid phone number format")
-        else:
-            raise ValueError("Invalid phone number format")
 
     def remove_phone(self, phone):
         self.phones = [p for p in self.phones if p.value != phone]

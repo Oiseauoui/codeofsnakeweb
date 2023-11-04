@@ -13,7 +13,7 @@ class Bot:
     ):  # Provide a default filename or pass it when creating an instance
         self.book = AddressBook(filename)
 
-    def handle_command(self, address_book, command):
+    def handle_command(self, address_book: object, command: object) -> object:
         # Розділити введену команду на частини
         parts = command.lower().split()
 

@@ -2,7 +2,6 @@ import os
 import logging
 from Bot import Bot
 from AddressBook import AddressBook
-from info import Record
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ADDRESS_BOOK_PATH = os.path.join(BASE_DIR, "address_book.dat")
@@ -79,6 +78,6 @@ def main():
             logger.info("Application closed by user")
             break
 
-
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     # main()  # Uncomment if you want to run the existing command-line interface
+#     app.run(debug=True)

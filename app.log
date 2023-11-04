@@ -11,3 +11,70 @@ Page 1 of 1 |
 2023-11-03 08:30:22,545 - INFO - User input: учше, Bot response: Unknown command
 2023-11-03 08:30:29,394 - INFO - User input: exit, Bot response: Good bye! Have a nice day
 2023-11-03 08:30:29,395 - INFO - Application closed by user
+2023-11-03 23:00:18,588 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-03 23:00:18,588 - INFO - [33mPress CTRL+C to quit[0m
+2023-11-03 23:00:18,592 - INFO -  * Restarting with stat
+2023-11-03 23:00:18,901 - WARNING -  * Debugger is active!
+2023-11-03 23:00:18,909 - INFO -  * Debugger PIN: 105-022-080
+2023-11-03 23:04:11,795 - INFO -  * Detected change in 'E:\\PYTHON\\PYTHON\\Ali_Saleh\\codeofsnakeweb\\Code-of-Snake_update\\Bot.py', reloading
+2023-11-03 23:04:11,829 - INFO -  * Restarting with stat
+2023-11-03 23:04:12,111 - WARNING -  * Debugger is active!
+2023-11-03 23:04:12,116 - INFO -  * Debugger PIN: 105-022-080
+2023-11-03 23:04:34,511 - INFO -  * Detected change in 'E:\\PYTHON\\PYTHON\\Ali_Saleh\\codeofsnakeweb\\Code-of-Snake_update\\helper.py', reloading
+2023-11-03 23:04:34,551 - INFO -  * Restarting with stat
+2023-11-03 23:12:02,636 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-03 23:12:02,636 - INFO - [33mPress CTRL+C to quit[0m
+2023-11-03 23:12:02,640 - INFO -  * Restarting with stat
+2023-11-03 23:12:02,906 - WARNING -  * Debugger is active!
+2023-11-03 23:12:02,911 - INFO -  * Debugger PIN: 105-022-080
+2023-11-03 23:12:08,328 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-03 23:12:08,328 - INFO - [33mPress CTRL+C to quit[0m
+2023-11-03 23:12:08,332 - INFO -  * Restarting with stat
+2023-11-03 23:12:08,624 - WARNING -  * Debugger is active!
+2023-11-03 23:12:08,630 - INFO -  * Debugger PIN: 105-022-080
+2023-11-03 23:12:48,033 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-03 23:12:48,033 - INFO - [33mPress CTRL+C to quit[0m
+2023-11-03 23:12:48,037 - INFO -  * Restarting with stat
+2023-11-03 23:12:48,329 - WARNING -  * Debugger is active!
+2023-11-03 23:12:48,335 - INFO -  * Debugger PIN: 105-022-080
+2023-11-03 23:13:48,636 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-03 23:13:48,636 - INFO - [33mPress CTRL+C to quit[0m
+2023-11-03 23:17:15,755 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-03 23:17:15,755 - INFO - [33mPress CTRL+C to quit[0m
+2023-11-03 23:17:15,759 - INFO -  * Restarting with stat
+2023-11-03 23:17:15,996 - WARNING -  * Debugger is active!
+2023-11-03 23:17:16,000 - INFO -  * Debugger PIN: 105-022-080
+2023-11-03 23:18:37,143 - INFO -  * Detected change in 'E:\\PYTHON\\PYTHON\\Ali_Saleh\\codeofsnakeweb\\Code-of-Snake_update\\app.py', reloading
+2023-11-03 23:18:37,174 - INFO -  * Restarting with stat
+2023-11-03 23:18:37,439 - WARNING -  * Debugger is active!
+2023-11-03 23:18:37,444 - INFO -  * Debugger PIN: 105-022-080
+2023-11-03 23:20:06,109 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-03 23:20:06,109 - INFO - [33mPress CTRL+C to quit[0m
+2023-11-03 23:20:06,112 - INFO -  * Restarting with stat
+2023-11-03 23:20:06,344 - WARNING -  * Debugger is active!
+2023-11-03 23:20:06,349 - INFO -  * Debugger PIN: 105-022-080
+2023-11-03 23:20:48,929 - INFO -  * Detected change in 'E:\\PYTHON\\PYTHON\\Ali_Saleh\\codeofsnakeweb\\Code-of-Snake_update\\Bot.py', reloading
+2023-11-03 23:20:49,047 - INFO -  * Restarting with stat
+2023-11-03 23:20:49,700 - WARNING -  * Debugger is active!
+2023-11-03 23:20:49,716 - INFO -  * Debugger PIN: 105-022-080
+2023-11-03 23:22:08,021 - INFO -  * Detected change in 'E:\\PYTHON\\PYTHON\\Ali_Saleh\\codeofsnakeweb\\Code-of-Snake_update\\app.py', reloading
+2023-11-03 23:22:08,063 - INFO -  * Restarting with stat
+2023-11-03 23:24:51,208 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-03 23:24:51,209 - INFO - [33mPress CTRL+C to quit[0m
+2023-11-03 23:24:51,212 - INFO -  * Restarting with stat
+2023-11-03 23:24:51,454 - WARNING -  * Debugger is active!
+2023-11-03 23:24:51,459 - INFO -  * Debugger PIN: 105-022-080
+2023-11-03 23:25:12,802 - INFO -  * Detected change in 'E:\\PYTHON\\PYTHON\\Ali_Saleh\\codeofsnakeweb\\Code-of-Snake_update\\app.py', reloading
+2023-11-03 23:25:12,846 - INFO -  * Restarting with stat
+2023-11-03 23:25:13,104 - WARNING -  * Debugger is active!
+2023-11-03 23:25:13,109 - INFO -  * Debugger PIN: 105-022-080
+2023-11-03 23:35:42,549 - INFO -  * Detected change in 'E:\\PYTHON\\PYTHON\\Ali_Saleh\\codeofsnakeweb\\Code-of-Snake_update\\helper.py', reloading
+2023-11-03 23:35:42,583 - INFO -  * Restarting with stat
